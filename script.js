@@ -22,11 +22,19 @@ const getCountries = function (country) {
         const cur= data[0].currencies;
 
         for(let c in cur){
-            return c;
+            return cur[c];
+        }
+    }
+    const language= function(){
+        const lng= data[0].languages;
+
+        for(let l in lng){
+            return lng[l];
         }
     }
     const curr=currency();
-    // console.log(curr);
+    console.log(curr);
+    const lng=language();
 
     const html = `
     <article class="country">
@@ -35,8 +43,8 @@ const getCountries = function (country) {
             <h3 class="country__name">${data[0].name.common}</h3>
             <h4 class="country__region">${data[0].region}</h4>
             <p class="country__row"><span>👫</span>${data[0].population}</p>
-            <p class="country__row"><span>🗣️</span>${data[0].languages.ben}</p>
-            <p class="country__row"><span>💰</span>${curr}</p>
+            <p class="country__row"><span>🗣️</span>${lng}</p>
+            <p class="country__row"><span>💰</span>${curr.name}</p>
           </div>
     </article>
     `;
