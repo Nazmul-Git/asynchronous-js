@@ -86,17 +86,34 @@ const getCountriesData = function (country) {
     });
 };
 getCountriesData('bangladesh');
+////////////////////////////////////////////////
+
+const getJSON=(res)=>{
+    if (!res.ok) throw new Error(`Country not found ${res.status}`);//script.js:105 Error: Country not found 404
+    return res.json();
+}
+
+
 
 // arrow function
 const getCountriesDataUseArrow = (country, code) => {
   fetch(`https://restcountries.com/v3.1/name/${country}`)
-    .then(res => res.json(), error=>alert(console.error))
+    .then(res => {
+      console.log(res); //{type: 'cors', url: 'https://restcountries.com/v3.1/name/jhdds', redirected: false, status: 404, ok: false, …}
+      return getJSON(res);
+    })
     .then(data => {
-      console.log('Data 1: ',data);
-    //   const code= data
+      console.log('Data 1: ', data);
+      //   const code= data
       return fetch(`https://restcountries.com/v3.1/alpha/${code}`);
     })
-    .then(res => res.json()) // nested promises base on return new fetch
-    .then(data => console.log('Data 2: ',data[0].name.common)); //Bangladesh
+    .then(res => {
+        console.log(res);
+        return getJSON(res)
+    }) // nested promises base on return new fetch
+    .then(data => console.log('Data 2: ', data[0].name.common)) //Bangladesh
+    .catch(err => console.error(err))
+    .finally(() => console.log('you are online'));
 };
 getCountriesDataUseArrow('portugal', 'BD');
+getCountriesDataUseArrow('jhdds', 'POR'); // 404 not found
