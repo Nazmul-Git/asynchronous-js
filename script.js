@@ -90,13 +90,13 @@ getCountriesData('bangladesh');
 // arrow function
 const getCountriesDataUseArrow = (country, code) => {
   fetch(`https://restcountries.com/v3.1/name/${country}`)
-    .then(res => res.json())
+    .then(res => res.json(), error=>alert(console.error))
     .then(data => {
       console.log('Data 1: ',data);
     //   const code= data
       return fetch(`https://restcountries.com/v3.1/alpha/${code}`);
     })
-    .then(res => res.json()) // nested promises
-    .then(data => console.log('Data 2: ',data[0].cioc));
+    .then(res => res.json()) // nested promises base on return new fetch
+    .then(data => console.log('Data 2: ',data[0].name.common)); //Bangladesh
 };
 getCountriesDataUseArrow('portugal', 'BD');
