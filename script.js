@@ -11,30 +11,30 @@ const getCountries = function (country) {
   const request = new XMLHttpRequest();
   request.open('GET', `https://restcountries.com/v3.1/name/${country}`);
   const data = request.send();
-  // console.log(request.responseText);
+  console.log(request.responseText);
 
   request.addEventListener('load', function () {
     //   console.log(this.responseText);
     const data = JSON.parse(this.responseText);
     console.log(data);
 
-    const currency= function(){
-        const cur= data[0].currencies;
+    const currency = function () {
+      const cur = data[0].currencies;
 
-        for(let c in cur){
-            return cur[c];
-        }
-    }
-    const language= function(){
-        const lng= data[0].languages;
+      for (let c in cur) {
+        return cur[c];
+      }
+    };
+    const language = function () {
+      const lng = data[0].languages;
 
-        for(let l in lng){
-            return lng[l];
-        }
-    }
-    const curr=currency();
-    console.log(curr);
-    const lng=language();
+      for (let l in lng) {
+        return lng[l];
+      }
+    };
+    const curr = currency();
+    // console.log(curr);
+    const lng = language();
 
     const html = `
     <article class="country">
@@ -56,3 +56,47 @@ const getCountries = function (country) {
 
 getCountries('bangladesh');
 getCountries('portugal');
+
+// CALL BACK HELL
+// setTimeout(()=>{
+//     console.log('2 second passed');
+//     setTimeout(()=>{
+//         console.log('4 second passed');
+//         setTimeout(()=>{
+//             console.log('6 second passed');
+//             setTimeout(()=>{
+//                 console.log('8 second passed');
+//                 setTimeout(()=>{
+//                     console.log('10 second passed');
+//                 },2000)
+//             },2000)
+//         },2000)
+//     },2000);
+// },2000)
+
+// MODERN JS HAVE PROMISES
+const getCountriesData = function (country) {
+  fetch(`https://restcountries.com/v3.1/name/${country}`)
+    .then(function (res) {
+      //   console.log(res); //{type: 'cors', url: 'https://restcountries.com/v3.1/name/bangladesh', redirected: false, status: 200, ok: true, …}
+      return res.json();
+    })
+    .then(function (data) {
+      console.log('data=', data);
+    });
+};
+getCountriesData('bangladesh');
+
+// arrow function
+const getCountriesDataUseArrow = (country, code) => {
+  fetch(`https://restcountries.com/v3.1/name/${country}`)
+    .then(res => res.json())
+    .then(data => {
+      console.log('Data 1: ',data);
+    //   const code= data
+      return fetch(`https://restcountries.com/v3.1/alpha/${code}`);
+    })
+    .then(res => res.json()) // nested promises
+    .then(data => console.log('Data 2: ',data[0].cioc));
+};
+getCountriesDataUseArrow('portugal', 'BD');
