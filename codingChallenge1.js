@@ -69,7 +69,16 @@ lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
 
 // ////////////////////////////////////////////////////////
 // Coding challenge 2
+
+const wait= function(sec){
+    return new Promise(function(resolve){
+        setTimeout(resolve, sec*1000);
+    });
+};
+
 const imgContainer = document.querySelector('.imgContainer');
+let currentImg;
+
 const createImage = function (imgPath) {
   return new Promise(function (resolve, reject) {
     const img = document.createElement('img');
@@ -87,5 +96,22 @@ const createImage = function (imgPath) {
 };
 
 createImage('/img/img-1.jpg')
-  .then(img => console.log('Image 1 loaded.'))
+  .then(img => {
+    currentImg=img;
+    console.log('Image 1 loaded.');
+    return wait(2);
+}).then(()=>{
+    currentImg.style.display='none';
+    return createImage('/img/img-2.jpg');
+}).then(img=>{
+    currentImg=img;
+    console.log('Image 2 loaded.');
+    return wait(2);
+}).then(()=>{
+    currentImg.style.display='none';
+    return createImage('/img/img-3.jpg');
+}).then(img=>{
+    console.log('Image 3 loaded.');
+    return wait(2);
+})
   .catch(err => console.error(err));
