@@ -89,7 +89,7 @@ getCountriesData('bangladesh');
 ////////////////////////////////////////////////
 
 const getJSON=(res)=>{
-    if (!res.ok) throw new Error(`Country not found ${res.status}`);//script.js:105 Error: Country not found 404
+    if (!res.ok) throw new Error(`Country not found ${res.status}`);// Error: Country not found 404
     return res.json();
 }
 
