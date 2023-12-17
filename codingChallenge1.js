@@ -42,29 +42,50 @@ const whereAmI = (lat, lng) => {
     })
     .then(data => console.log(data[0]))
     .catch(err => console.error(err.message));
-    // .finally(() => console.log('Done.'));
+  // .finally(() => console.log('Done.'));
 };
 
 whereAmI(52.508, 13.381);
 // whereAmI(19.037, 72.873);
 // whereAmI(-33.933, 18.474);
 
-
 ///////////////////////////////////////////////////////////////
 console.log('Test Start');
-setTimeout(()=>console.log('0 sec timer'),0); //inside callback queue
-Promise.resolve('Resolve promise 1.').then(res=>console.log(res)); //inside microtask queue
-console.log('Test End')
-
+setTimeout(() => console.log('0 sec timer'), 0); //inside callback queue
+Promise.resolve('Resolve promise 1.').then(res => console.log(res)); //inside microtask queue
+console.log('Test End');
 
 ////////////////////////////////////////////////////////////
 //  Promise
-const lotteryPromise= new Promise(function(resolve, reject){
-    console.log('Lottery Draw...');
-    setTimeout(()=>{
-        if(Math.random() >= 0.5) resolve('You Win.')
-        else reject('You loss.')
-    },2000);
+const lotteryPromise = new Promise(function (resolve, reject) {
+  console.log('Lottery Draw...');
+  setTimeout(() => {
+    if (Math.random() >= 0.5) resolve('You Win.');
+    else reject('You loss.');
+  }, 2000);
 });
 
-lotteryPromise.then(res=>console.log(res)).catch(err=>console.error(err));
+lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
+
+// ////////////////////////////////////////////////////////
+// Coding challenge 2
+const imgContainer = document.querySelector('.imgContainer');
+const createImage = function (imgPath) {
+  return new Promise(function (resolve, reject) {
+    const img = document.createElement('img');
+    img.src = imgPath;
+
+    img.addEventListener('load', function () {
+      imgContainer.append(img);
+      resolve(img);
+    });
+
+    img.addEventListener('error', function () {
+      reject(new Error('Image not found.'));
+    });
+  });
+};
+
+createImage('/img/img-1.jpg')
+  .then(img => console.log('Image 1 loaded.'))
+  .catch(err => console.error(err));
