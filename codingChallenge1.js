@@ -22,30 +22,30 @@ TEST COORDINATES 2: -33.933, 18.474
 GOOD LUCK 😀
 */
 
-const whereAmI = (lat, lng) => {
-  fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
-    .then(res => {
-      console.log(res);
-      if (!res.ok) throw new Error(`Problem with geocoding ${res.status}`);
-      return res.json();
-    })
-    .then(data => {
-      console.log(data);
-      console.log(`You are in ${data.city}, ${data.country}`);
+// const whereAmI = (lat, lng) => {
+//   fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
+//     .then(res => {
+//       console.log(res);
+//       if (!res.ok) throw new Error(`Problem with geocoding ${res.status}`);
+//       return res.json();
+//     })
+//     .then(data => {
+//       console.log(data);
+//       console.log(`You are in ${data.city}, ${data.country}`);
 
-      return fetch(`https://restcountries.com/v3.1/name/${data.country}`);
-    })
-    .then(res => {
-      if (!res.ok) throw new Error(`Country not found ${res.status}`);
+//       return fetch(`https://restcountries.com/v3.1/name/${data.country}`);
+//     })
+//     .then(res => {
+//       if (!res.ok) throw new Error(`Country not found ${res.status}`);
 
-      return res.json();
-    })
-    .then(data => console.log(data[0]))
-    .catch(err => console.error(err.message));
-  // .finally(() => console.log('Done.'));
-};
+//       return res.json();
+//     })
+//     .then(data => console.log(data[0]))
+//     .catch(err => console.error(err.message));
+//   // .finally(() => console.log('Done.'));
+// };
 
-whereAmI(52.508, 13.381);
+// whereAmI(52.508, 13.381);
 // whereAmI(19.037, 72.873);
 // whereAmI(-33.933, 18.474);
 
@@ -113,5 +113,20 @@ createImage('/img/img-1.jpg')
 }).then(img=>{
     console.log('Image 3 loaded.');
     return wait(2);
-})
+}).then(()=>currentImg.style.display='none')
   .catch(err => console.error(err));
+
+
+///////////////////////////////////////////////////
+//  async await
+const whereAmI =async (lat, lng) => {
+    try{
+        const res= await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
+    const data= await res.json();
+    console.log(data);
+    }catch(err){
+        console.error('my error',err.message);
+    }
+  };
+  
+  whereAmI(52.508, 13.381);
