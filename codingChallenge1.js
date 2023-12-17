@@ -55,3 +55,16 @@ console.log('Test Start');
 setTimeout(()=>console.log('0 sec timer'),0); //inside callback queue
 Promise.resolve('Resolve promise 1.').then(res=>console.log(res)); //inside microtask queue
 console.log('Test End')
+
+
+////////////////////////////////////////////////////////////
+//  Promise
+const lotteryPromise= new Promise(function(resolve, reject){
+    console.log('Lottery Draw...');
+    setTimeout(()=>{
+        if(Math.random() >= 0.5) resolve('You Win.')
+        else reject('You loss.')
+    },2000);
+});
+
+lotteryPromise.then(res=>console.log(res)).catch(err=>console.error(err));
