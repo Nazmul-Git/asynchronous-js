@@ -70,10 +70,10 @@ lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
 // ////////////////////////////////////////////////////////
 // Coding challenge 2
 
-const wait= function(sec){
-    return new Promise(function(resolve){
-        setTimeout(resolve, sec*1000);
-    });
+const wait = function (sec) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, sec * 1000);
+  });
 };
 
 const imgContainer = document.querySelector('.imgContainer');
@@ -97,36 +97,40 @@ const createImage = function (imgPath) {
 
 createImage('/img/img-1.jpg')
   .then(img => {
-    currentImg=img;
+    currentImg = img;
     console.log('Image 1 loaded.');
     return wait(2);
-}).then(()=>{
-    currentImg.style.display='none';
+  })
+  .then(() => {
+    currentImg.style.display = 'none';
     return createImage('/img/img-2.jpg');
-}).then(img=>{
-    currentImg=img;
+  })
+  .then(img => {
+    currentImg = img;
     console.log('Image 2 loaded.');
     return wait(2);
-}).then(()=>{
-    currentImg.style.display='none';
+  })
+  .then(() => {
+    currentImg.style.display = 'none';
     return createImage('/img/img-3.jpg');
-}).then(img=>{
+  })
+  .then(img => {
     console.log('Image 3 loaded.');
     return wait(2);
-}).then(()=>currentImg.style.display='none')
+  })
+  .then(() => (currentImg.style.display = 'none'))
   .catch(err => console.error(err));
-
 
 ///////////////////////////////////////////////////
 //  async await
-const whereAmI =async (lat, lng) => {
-    try{
-        const res= await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
-    const data= await res.json();
+const whereAmI = async (lat, lng) => {
+  try {
+    const res = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+    const data = await res.json();
     console.log(data);
-    }catch(err){
-        console.error('my error',err.message);
-    }
-  };
-  
-  whereAmI(52.508, 13.381);
+  } catch (err) {
+    console.error('my error', err.message);
+  }
+};
+
+whereAmI(52.508, 13.381);
