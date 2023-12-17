@@ -25,7 +25,7 @@ GOOD LUCK 😀
 const whereAmI = (lat, lng) => {
   fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
     .then(res => {
-        console.log(res);
+      console.log(res);
       if (!res.ok) throw new Error(`Problem with geocoding ${res.status}`);
       return res.json();
     })
@@ -42,6 +42,7 @@ const whereAmI = (lat, lng) => {
     })
     .then(data => console.log(data[0]))
     .catch(err => console.error(err.message));
+    // .finally(() => console.log('Done.'));
 };
 
 whereAmI(52.508, 13.381);
